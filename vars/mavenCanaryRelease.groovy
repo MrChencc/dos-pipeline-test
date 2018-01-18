@@ -32,9 +32,7 @@ def call(body) {
           def utils = new Utils()
           def namespace = utils.getNamespace()
         retry(3){
-            sh "sudo docker login  registry.timeondata.com -uguanshengyang -pGuanYang1"
-            sh "mvn fabric8:push -Ddocker.push.registry=registry.timeondata.com"
-//            sh 'sudo docker rmi -f registry.timeondata.com/dos/appprojserver:latest_test'
+            sh "mvn fabric8:push -Ddocker.push.registry=192.168.1.40:5000"
         }
       }
 //    }

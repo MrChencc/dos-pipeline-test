@@ -7,18 +7,23 @@ def call(body) {
     body()
 
     def replaceYaml = """
-        cd /home/jenkins/workspace/dos-proj-test@2/PROJECT-GENERATOR
+        temp=\$(pwd)
+        cd \$temp/PROJECT-GENERATOR
         pwd
         sed  -i 's/\\\\[namespace]/dosproj-pipeline-test/g'  dos-proj.yaml
         sed  -i 's/\\\\[version]/latest_test/g'  dos-proj.yaml
         sed  -i 's/PORTNUM/29164/g'  dos-proj.yaml
-        cd /home/jenkins/workspace/dos-proj-test@2/appbuildresources
+        cd \$temp/appbuildresources
         sed  -i 's/\\[namespace]/dosproj-pipeline-test/g'  conf/Config.properties
         sed  -i 's/\\[cluster-name]/iuser/g'  conf/Config.properties
         sed  -i 's/\\[cluster-password]/0000/g'  conf/Config.properties
         sed  -i 's/\\[fabric-namespace]/fabric8/g'  conf/Config.properties
         echo 'compelet!'
-        cd /home/jenkins/workspace/dos-proj-test@2
+        cd \$temp
+        cat pom.xml
+        cd \$temp/PROJECT-GENERATOR 
+        echo pom.xml > \$temp/pom.xml
+        cat pom.xml
     """
     return replaceYaml
 }
