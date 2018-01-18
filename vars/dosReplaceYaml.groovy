@@ -22,8 +22,6 @@ def call(body) {
         cd \$temp
         cat pom.xml
         cd \$temp/PROJECT-GENERATOR 
-        echo pom.xml > \$temp/pom.xml
-        cat pom.xml
     """
     return replaceYaml
 }
