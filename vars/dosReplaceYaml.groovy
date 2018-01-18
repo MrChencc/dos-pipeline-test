@@ -7,6 +7,7 @@ def call(body) {
     body()
 
     def replaceYaml = """
+        mvn clean -e -U deploy
         temp=\$(pwd)
         cd \$temp/PROJECT-GENERATOR
         pwd
