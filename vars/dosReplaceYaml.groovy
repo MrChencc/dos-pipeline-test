@@ -11,7 +11,7 @@ def call(body) {
         pwd
         sed  -i 's/\\\\[namespace]/dosproj-pipeline-test/g'  dos-proj.yaml
         sed  -i 's/\\\\[version]/latest_test/g'  dos-proj.yaml
-        sh "sed  -i 's/PORTNUM/29164/g'  dos-proj.yaml
+        sed  -i 's/PORTNUM/29164/g'  dos-proj.yaml
         cd /home/jenkins/workspace/dos-proj-test@2/appbuildresources
         sed  -i 's/\\[namespace]/dosproj-pipeline-test/g'  conf/Config.properties
         sed  -i 's/\\[cluster-name]/iuser/g'  conf/Config.properties
