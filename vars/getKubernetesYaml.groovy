@@ -17,16 +17,20 @@ def call(body) {
     def requestMemory = config.resourceRequestMemory ?: '0'
     def limitCPU = config.resourceLimitMemory ?: '0'
     def limitMemory = config.resourceLimitMemory ?: '0'
+    def m = readMavenPom file: "${config.pom}"
+    def groupId
+    if (m.groupId == null){
+        groupId = m.parent.groupId.split( '\\.' )
+    } else {
+        groupId = m.groupId.split( '\\.' )
+    }
+    def artifactId = m.artifactId
+    def user = groupId[groupId.size()-1].trim()
     def yaml
 
     def isSha = ''
     if (flow.isOpenShift()){
         isSha = utils.getImageStreamSha(env.JOB_NAME)
-    }
-
-    def fabric8Registry = ''
-    if (env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST){
-        fabric8Registry = env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST+':'+env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT+'/'
     }
 
     def sha
@@ -37,7 +41,7 @@ kind: List
 items:
 """
 
-def service = """
+    def service = """
 - apiVersion: v1
   kind: Service
   metadata:
@@ -61,7 +65,7 @@ def service = """
       group: quickstart
 """
 
-def deployment = """
+    def deployment = """
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
@@ -94,7 +98,7 @@ def deployment = """
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: ${fabric8Registry}${env.KUBERNETES_NAMESPACE}/${env.JOB_NAME}:${config.version}
+          image: ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}
           imagePullPolicy: IfNotPresent
           name: ${env.JOB_NAME}
           ports:
@@ -110,7 +114,7 @@ def deployment = """
         terminationGracePeriodSeconds: 2
 """
 
-def deploymentConfig = """
+    def deploymentConfig = """
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -142,7 +146,7 @@ def deploymentConfig = """
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: ${env.JOB_NAME}:${config.version}
+          image: ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}
           imagePullPolicy: IfNotPresent
           name: ${env.JOB_NAME}
           ports:
@@ -182,13 +186,13 @@ def deploymentConfig = """
       name: ${config.version}
 """
 
-  if (flow.isOpenShift()){
-    yaml = list + service + is + deploymentConfig
-  } else {
-    yaml = list + service + deployment
-  }
+    if (flow.isOpenShift()){
+        yaml = list + service + is + deploymentConfig
+    } else {
+        yaml = list + service + deployment
+    }
 
-  echo 'using resources:\n' + yaml
-  return yaml
+    echo 'using resources:\n' + yaml
+    return yaml
 
-  }
+}

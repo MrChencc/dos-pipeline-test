@@ -17,8 +17,13 @@ def call(body) {
     def s2iMode = flow.isOpenShiftS2I()
     echo "s2i mode: ${s2iMode}"
 
-        def m = readMavenPom file: 'PROJECT-GENERATOR/pom.xml'
-        def groupId = m.parent.groupId.split( '\\.' )
+        def m = readMavenPom file: "${config.pom}"
+        def groupId
+        if (m.groupId == null){
+            groupId = m.parent.groupId.split( '\\.' )
+        } else {
+            groupId = m.groupId.split( '\\.' )
+        }
         def user = groupId[groupId.size()-1].trim()
         def artifactId = m.artifactId.toLowerCase()
         def version = m.version
