@@ -24,7 +24,7 @@ def call(body) {
     } else {
         groupId = m.groupId.split( '\\.' )
     }
-    def artifactId = m.artifactId
+    def artifactId = m.artifactId.toLowerCase()
     def user = groupId[groupId.size()-1].trim()
     def yaml
 
