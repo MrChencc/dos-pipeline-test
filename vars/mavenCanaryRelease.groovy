@@ -19,7 +19,7 @@ def call(body) {
 
 //    if (flow.isSingleNode()){
 //        echo 'Running on a single node, skipping docker push as not needed'
-        def m = readMavenPom file: 'pom-project-generator.xml'
+        def m = readMavenPom file: 'PROJECT-GENERATOR/pom.xml'
         def groupId = m.groupId.split( '\\.' )
         def user = groupId[groupId.size()-1].trim()
         def artifactId = m.artifactId.toLowerCase()
