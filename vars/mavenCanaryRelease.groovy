@@ -10,9 +10,9 @@ def call(body) {
 
     def flow = new io.fabric8.Fabric8Commands()
 
-    sh "git checkout -b ${env.JOB_NAME}-${config.version}"
-    sh "mvn org.codehaus.mojo:versions-maven-plugin:2.2:set -U -DnewVersion=${config.version}"
-//    sh "mvn clean -f pom-project-generator.xml -e -U deploy"
+//    sh "git checkout -b ${env.JOB_NAME}-${config.version}"
+//    sh "mvn org.codehaus.mojo:versions-maven-plugin:2.2:set -U -DnewVersion=${config.version}" // 更新统一的版本
+//    sh "mvn clean -f pom-project-generator.xml -e -U deploy" // 推送jar包到nexus
 
     def s2iMode = flow.isOpenShiftS2I()
     echo "s2i mode: ${s2iMode}"
@@ -27,8 +27,8 @@ def call(body) {
 
     if (!s2iMode) {
         retry(1){
-            sh "docker tag ${user}/${artifactId}:${version} ${fabric8Registry}dos/proj-test:latest"
-            sh "docker push  ${fabric8Registry}dos/proj-test:latest"
+            sh "docker tag ${user}/${artifactId}:${version} ${fabric8Registry}dos/proj-test:${config.version}"
+            sh "docker push  ${fabric8Registry}dos/proj-test:${config.version}"
             sh "docker rmi -f ${user}/${artifactId}:${version}"
         }
       }
