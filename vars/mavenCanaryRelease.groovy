@@ -36,7 +36,7 @@ def call(body) {
             sh 'docker push  192.168.1.40:5000/dos/proj-test:latest'
             sh 'docker images | grep proj'
 //            sh "mvn -f pom-project-generator.xml fabric8:push -Ddocker.push.registry=192.168.1.40:5000"
-            sh 'docker rmi -f 192.168.1.40:5000/dos/proj-test:latest'
+            sh "docker rmi -f ${user}/${artifactId}:${version}"
             sh 'docker images | grep proj'
         }
       }
