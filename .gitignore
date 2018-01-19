@@ -8,7 +8,7 @@
 *.war
 *.ear
 /out
-# /.idea
+/.idea
 *.iml
 .vscode
 
