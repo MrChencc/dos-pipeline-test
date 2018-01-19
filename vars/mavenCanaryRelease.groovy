@@ -32,7 +32,8 @@ def call(body) {
           def utils = new Utils()
           def namespace = utils.getNamespace()
         retry(3){
-            sh "mvn -f pom-project-generator.xml fabric8:push -Ddocker.push.registry=192.168.1.87:5000"
+            sh 'docker images'
+            sh "mvn -f pom-project-generator.xml fabric8:push -Ddocker.push.registry=192.168.1.40:5000"
         }
       }
 //    }
