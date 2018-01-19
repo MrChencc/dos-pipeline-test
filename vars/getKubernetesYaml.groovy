@@ -52,7 +52,7 @@ items:
       project: ${env.JOB_NAME}
       expose: '${expose}'
       version: ${config.version}
-      group: quickstart
+      group: dos
     name: ${env.JOB_NAME}
   spec:
     ports:
@@ -62,7 +62,7 @@ items:
     selector:
       project: ${env.JOB_NAME}
       provider: fabric8
-      group: quickstart
+      group: dos
 """
 
     def deployment = """
@@ -75,7 +75,7 @@ items:
       provider: fabric8
       project: ${env.JOB_NAME}
       version: ${config.version}
-      group: quickstart
+      group: dos
     name: ${env.JOB_NAME}
   spec:
     replicas: 1
@@ -83,14 +83,14 @@ items:
       matchLabels:
         provider: fabric8
         project: ${env.JOB_NAME}
-        group: quickstart
+        group: dos
     template:
       metadata:
         labels:
           provider: fabric8
           project: ${env.JOB_NAME}
           version: ${config.version}
-          group: quickstart
+          group: dos
       spec:
         containers:
         - env:
@@ -124,21 +124,21 @@ items:
       provider: fabric8
       project: ${env.JOB_NAME}
       version: ${config.version}
-      group: quickstart
+      group: dos
     name: ${env.JOB_NAME}
   spec:
     replicas: 1
     selector:
       provider: fabric8
       project: ${env.JOB_NAME}
-      group: quickstart
+      group: dos
     template:
       metadata:
         labels:
           provider: fabric8
           project: ${env.JOB_NAME}
           version: ${config.version}
-          group: quickstart
+          group: dos
       spec:
         containers:
         - env:

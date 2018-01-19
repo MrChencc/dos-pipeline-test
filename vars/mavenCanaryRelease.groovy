@@ -32,10 +32,10 @@ def call(body) {
 
     if (!s2iMode) {
         retry(1){
-            sh 'docker images |grep proj'
             sh "docker tag ${user}/${artifactId}:${version} ${fabric8Registry}dos/proj-test:${config.version}"
             sh "docker push  ${fabric8Registry}dos/proj-test:${config.version}"
             sh "docker rmi -f ${user}/${artifactId}:${version}"
+            sh 'docker images | grep proj'
         }
       }
 
