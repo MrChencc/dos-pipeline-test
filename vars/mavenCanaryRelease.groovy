@@ -22,7 +22,7 @@ def call(body) {
         def m = readMavenPom file: 'pom-project-generator.xml'
         def groupId = m.groupId.split( '\\.' )
         def user = groupId[groupId.size()-1].trim()
-        def artifactId = m.artifactId
+        def artifactId = m.artifactId.toLowerCase()
         def version = m.version
 //
 //       if (!s2iMode) {
