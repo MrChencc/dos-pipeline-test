@@ -10,8 +10,8 @@ def call(body) {
 
     def flow = new io.fabric8.Fabric8Commands()
 
-    sh "git checkout -b ${env.JOB_NAME}-${config.version}"
-//    sh "mvn org.codehaus.mojo:versions-maven-plugin:2.2:set -U -DnewVersion=${config.version}" // 更新统一的版本
+//    sh "git checkout -b ${env.JOB_NAME}-${config.version}"
+    sh "mvn org.codehaus.mojo:versions-maven-plugin:2.2:set -U -DnewVersion=${config.version}" // 更新统一的版本
 //    sh "mvn clean -f pom-project-generator.xml -e -U deploy" // 推送jar包到nexus
 
     def s2iMode = flow.isOpenShiftS2I()
