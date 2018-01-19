@@ -19,10 +19,10 @@ def call(body) {
 
 //    if (flow.isSingleNode()){
 //        echo 'Running on a single node, skipping docker push as not needed'
-//        def m = readMavenPom file: 'pom.xml'
-//        def groupId = m.groupId.split( '\\.' )
-//        def user = groupId[groupId.size()-1].trim()
-//        def artifactId = m.artifactId
+        def m = readMavenPom file: 'pom.xml'
+        def groupId = m.groupId.split( '\\.' )
+        def user = groupId[groupId.size()-1].trim()
+        def artifactId = m.artifactId
 //
 //       if (!s2iMode) {
 //           sh "docker tag ${user}/${artifactId}:${config.version} ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}"
@@ -32,9 +32,10 @@ def call(body) {
           def utils = new Utils()
           def namespace = utils.getNamespace()
         retry(3){
-            sh 'docker images'
-            sh 'sudo docker tag ${user}/${artifactId}:${config.version} 192.168.1.40:5000/dos/proj-test:latest'
+            sh 'docker images | grep proj'
+            sh "sudo docker tag ${user}/${artifactId}:${config.version} 192.168.1.40:5000/dos/proj-test:latest"
             sh 'sudo docker push  192.168.1.40:5000/dos/proj-test:latest'
+            sh 'docker images | grep proj'
 //            sh "mvn -f pom-project-generator.xml fabric8:push -Ddocker.push.registry=192.168.1.40:5000"
             sh 'sudo docker rmi -f 192.168.1.40:5000/dos/proj-test:latest'
         }
