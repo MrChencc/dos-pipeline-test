@@ -99,9 +99,7 @@ items:
               fieldRef:
                 fieldPath: metadata.namespace
           - name:  APP_HOME_CONF_DIR
-            valueFrom:
-              fieldRef:
-                fieldPath: /opt/dos/conf
+            value: /opt/dos/conf
           image: ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}
           imagePullPolicy: IfNotPresent
           name: ${env.JOB_NAME}
@@ -151,7 +149,7 @@ items:
               fieldRef:
                 fieldPath: metadata.namespace
           - name:  APP_HOME_CONF_DIR
-            value: "/opt/dos/conf"
+            value: /opt/dos/conf
           image: ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}
           imagePullPolicy: IfNotPresent
           name: ${env.JOB_NAME}
