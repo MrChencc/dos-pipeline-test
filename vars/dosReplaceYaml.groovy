@@ -18,10 +18,6 @@ def call(body) {
         sed  -i 's/\\[cluster-name]/iuser/g'  conf/Config.properties
         sed  -i 's/\\[cluster-password]/0000/g'  conf/Config.properties
         sed  -i 's/\\[fabric-namespace]/fabric8/g'  conf/Config.properties
-        echo 'compelet!'
-        cd \$temp
-        cat pom.xml
-        cd \$temp/PROJECT-GENERATOR 
     """
     return replaceYaml
 }
