@@ -156,7 +156,7 @@ def getNewVersionFromTag(pomVersion = null){
 
   echo "Testing to see if version ${tag} is semver compatible"
 
-  def semver = tag =~ /(?i)\bv?(?<major>0|[1-9]\d*)(?:\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?)?(?:-(?<prerelease>[\da-z\-]+(?:\.[\da-z\-]+)*))?(?:\+(?<build>[\da-z\-]+(?:\.[\da-z\-]+)*))?\b/
+  def semver = tag =~ /(?i)\bv?(?<major>0|[1-9]\d*)(?:\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?)?(?:-(?<prerelease>[\da-z\-]+(?:\.[\dtestCostomPipelineUtil-z\-]+)*))?(?:\+(?<build>[\dtestCostomPipelineUtil-z\-]+(?:\.[\dtestCostomPipelineUtil-z\-]+)*))?\b/
 
   if (semver.matches()) {
     echo "Version ${tag} is semver compatible"
@@ -167,7 +167,7 @@ def getNewVersionFromTag(pomVersion = null){
 
     echo "Testing to see if current POM version ${pomVersion} is semver compatible"
 
-    def pomSemver = pomVersion.trim() =~ /(?i)\bv?(?<major>0|[1-9]\d*)(?:\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?)?(?:-(?<prerelease>[\da-z\-]+(?:\.[\da-z\-]+)*))?(?:\+(?<build>[\da-z\-]+(?:\.[\da-z\-]+)*))?\b/
+    def pomSemver = pomVersion.trim() =~ /(?i)\bv?(?<major>0|[1-9]\d*)(?:\.(?<minor>0|[1-9]\d*)(?:\.(?<patch>0|[1-9]\d*))?)?(?:-(?<prerelease>[\da-z\-]+(?:\.[\dtestCostomPipelineUtil-z\-]+)*))?(?:\+(?<build>[\dtestCostomPipelineUtil-z\-]+(?:\.[\dtestCostomPipelineUtil-z\-]+)*))?\b/
     if (pomSemver.matches()) {
       echo "Current POM version ${pomVersion} is semver compatible"
 
@@ -200,7 +200,7 @@ def getNewVersionFromTag(pomVersion = null){
     if (previousReleaseVersion.isNumber()){
       return previousReleaseVersion + '.0.1'
     } else {
-      // if previous tag is not a number and doesnt have a '.' version seperator then error until we have one
+      // if previous tag is not a number and doesnt have testCostomPipelineUtil '.' version seperator then error until we have one
       if (previousReleaseVersion.lastIndexOf('.') == 0){
         error "found invalid latest tag [${previousReleaseVersion}] set to major.minor.micro to calculate next release version"
       }
