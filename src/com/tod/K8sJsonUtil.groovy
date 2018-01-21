@@ -9,4 +9,12 @@ class K8sJsonUtil {
     K8sJsonUtil(def config, def envs) {
 
     }
+
+
+    final static def list = """
+---
+apiVersion: v1
+kind: List
+items:
+"""
 }
