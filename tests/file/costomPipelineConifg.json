@@ -1,77 +1,17 @@
 {
-  "version": "1.0",
-  "roles": {
-    "admin": {
-      "description": "超级管理员",
-      "scopes": [
-        "common_scope",
-        "manage_scope"
-      ],
-      "menus": [
-        "应用管理",
-        "中心管理",
-        "服务器监控",
-        "API管理",
-        "API商店",
-        "API统计分析",
-        "节流限制策略",
-        "用户管理",
-        "租户管理",
-        "用户属性管理",
-        "参数设置",
-        "项目管理"
-      ],
-      "permissions": [
-      ]
+  "version":"3.3.1",
+  "build":{
+    "buildShell":"build.sh",
+    "dockerfile":"Dockerfile"
+  },
+  "deployment":{
+    "envs":{
+      "LANG":"zh_cn.UTF-8",
+      "CONF_DIR":"/opt/dos/conf"
     },
-    "PlatformOperator": {
-      "description": "平台运营者",
-      "scopes": [
-        "common_scope",
-        "manage_scope"
-      ],
-      "menus": [
-        "应用管理",
-        "中心管理",
-        "服务器监控",
-        "API管理",
-        "API商店",
-        "API统计分析",
-        "节流限制策略",
-        "用户管理",
-        "用户属性管理",
-        "参数设置",
-        "项目管理"
-      ],
-      "permissions": [
-        "/permission/admin"
-      ]
-    },
-    "ApplicationProvider": {
-      "description": "应用提供者",
-      "scopes": [
-        "common_scope"
-      ],
-      "menus": [
-        "应用管理",
-        "中心管理",
-        "API管理",
-        "项目管理"
-      ],
-      "permissions": [
-        "/permission/admin/manage/api"
-      ]
-    },
-    "TerminalUser": {
-      "description": "用户",
-      "scopes": [
-        "common_scope"
-      ],
-      "menus": [
-        "API商店"
-      ],
-      "permissions": [
-      ]
+    "port":{
+      "8080":"29152",
+      "443":"29443"
     }
   }
 }
