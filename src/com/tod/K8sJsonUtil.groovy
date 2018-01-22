@@ -76,12 +76,12 @@ class K8sJsonUtil {
 
     private static String withEnv(def envs) {
         String finalVal = '';
-        if (JenkinsUtil.isMap(envs)) {
-            Map envsMap = (Map) envs;
-            for (String mk : envsMap.keySet()) {
-                finalVal += makeEnv(mk, envsMap.get(mk));
-            }
-        }
+//        if (JenkinsUtil.isMap(envs)) {
+//            Map envsMap = (Map) envs;
+//            for (String mk : envsMap.keySet()) {
+//                finalVal += makeEnv(mk, envsMap.get(mk));
+//            }
+//        }
         return finalVal;
     }
 
