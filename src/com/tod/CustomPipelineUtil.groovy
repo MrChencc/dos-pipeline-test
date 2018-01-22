@@ -7,7 +7,7 @@ import groovy.json.JsonSlurperClassic
 /**
  * 自定义类型Pipeline 工具
  */
-class CostomPipelineUtil {
+class CustomPipelineUtil {
 /**
  * 生成Json配置文件
  * @param configStr 配置文件

@@ -200,7 +200,7 @@ def getNewVersionFromTag(pomVersion = null){
     if (previousReleaseVersion.isNumber()){
       return previousReleaseVersion + '.0.1'
     } else {
-      // if previous tag is not a number and doesnt have testCostomPipelineUtil '.' version seperator then error until we have one
+      // if previous tag is not a number and doesnt have testCustomPipelineUtil '.' version seperator then error until we have one
       if (previousReleaseVersion.lastIndexOf('.') == 0){
         error "found invalid latest tag [${previousReleaseVersion}] set to major.minor.micro to calculate next release version"
       }
