@@ -64,11 +64,11 @@ class K8sJsonUtil {
           image: ${image}
           imagePullPolicy: IfNotPresent
           name: ${jobName}
-        - env:
-          - name: KUBERNETES_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace${yamlEnv}
+          - env:
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace${yamlEnv}
           ports:${yamlPort}
 """
         return k8sResList + service + deployment;
@@ -87,8 +87,8 @@ class K8sJsonUtil {
 
     private static String makeEnv(def key, def val) {
         return """
-          - name:  ${key}
-            value: ${val}"""
+            - name:  ${key}
+              value: ${val}"""
     }
 
     private static String withPort(def ports) {
