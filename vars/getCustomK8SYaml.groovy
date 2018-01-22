@@ -7,7 +7,7 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    echo config.deployment
+    print(config.deployment)
     def yaml = K8sJsonUtil.getK8sJson(config, env);
     echo yaml
     return yaml
