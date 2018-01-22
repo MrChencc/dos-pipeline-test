@@ -34,8 +34,7 @@ class K8sJsonUtil {
       project: ${jobName}
       provider: fabric8
       group: dos
-    ports:${yamlSvcPort}
-"""
+    ports:${yamlSvcPort}"""
 
         def deployment = """
 - apiVersion: extensions/v1beta1
