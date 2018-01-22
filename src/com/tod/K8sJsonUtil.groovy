@@ -10,25 +10,13 @@ class K8sJsonUtil {
      * @param envs 环境变量
      */
     static getK8sJson(def config, def env) {
-        def utils = new Utils()
-
         if (!config.deployment) {
             return k8sResList;
         }
 
         def expose = config.exposeApp ?: 'true'
-        def m = readMavenPom file: "${config.pom}"
-        def groupId
-        if (m.groupId == null) {
-            groupId = m.parent.groupId.split('\\.')
-        } else {
-            groupId = m.groupId.split('\\.')
-        }
-        def artifactId = m.artifactId.toLowerCase()
-        def user = groupId[groupId.size() - 1].trim()
-
         def jobName = env.JOB_NAME.toLowerCase().replace('_', '-').replace('/', '-')
-        def image = "${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}"
+        def image = config.image
 
         def service = """
 - apiVersion: v1

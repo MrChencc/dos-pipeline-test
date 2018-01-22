@@ -29,21 +29,12 @@ def call(body) {
     def version = m.version
 
     def fabric8Registry = env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST + ':' + env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT + '/'
-
-    sh "docker build -f ${config.dockerfilePath} -t ${fabric8Registry}${user}/${artifactId}:${config.version} ."
+    def docker_image = "${fabric8Registry}${user}/${artifactId}:${config.version}"
+    sh "docker build -f ${config.dockerfilePath} -t ${docker_image} ."
     retry(2) {
-        sh "docker push  ${fabric8Registry}${user}/${artifactId}:${config.version}"
-        sh "docker rmi -f ${fabric8Registry}${user}/${artifactId}:${config.version}"
+        sh "docker push ${docker_image}"
+        sh "docker rmi ${docker_image}"
     }
 
-//    if (flow.hasService("content-repository")) {
-//      try {
-//        sh 'mvn site site:deploy'
-//      } catch (err) {
-//        // lets carry on as maven site isn't critical
-//        echo 'unable to generate maven site'
-//      }
-//    } else {
-//      echo 'no content-repository service so not deploying the maven site report'
-//    }
+    return docker_image
 }
