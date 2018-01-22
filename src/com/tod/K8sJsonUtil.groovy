@@ -67,7 +67,8 @@ class K8sJsonUtil {
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-""" + withEnv(config.deployment.envs)
+"""
+//        + withEnv(config.deployment.envs)
         +"""
           ports:
 """ + withPort(config.deployment.ports)
