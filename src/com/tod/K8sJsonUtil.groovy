@@ -71,7 +71,8 @@ class K8sJsonUtil {
 //        + withEnv(config.deployment.envs)
         +"""
           ports:
-""" + withPort(config.deployment.ports)
+"""
+//        + withPort(config.deployment.ports)
         return k8sResList + service + deployment;
     }
 
