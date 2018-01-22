@@ -90,8 +90,7 @@ class K8sJsonUtil {
     private static String makeEnv(def key, def val) {
         return """
           - name:  ${key}
-            value: ${val}
-"""
+            value: ${val}"""
     }
 
     private static String withPort(def ports) {
@@ -115,8 +114,7 @@ class K8sJsonUtil {
         }
         return """
           - containerPort: ${targetPort}
-            name: ${newName}
-"""
+            name: ${newName}"""
     }
 
     private static String withSvcPort(def ports) {
@@ -136,8 +134,7 @@ class K8sJsonUtil {
         return """
     - port: ${port}
       protocol: TCP
-      targetPort: ${targetPort}
-"""
+      targetPort: ${targetPort}"""
     }
 
     /**
@@ -147,7 +144,6 @@ class K8sJsonUtil {
 ---
 apiVersion: v1
 kind: List
-items:
-"""
+items:"""
 
 }
