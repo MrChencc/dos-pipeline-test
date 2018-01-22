@@ -13,8 +13,8 @@ class CostomPipelineUtil {
  * @return
  */
     static def getJsonPipelineConfig(String configStr) {
-        def jsonSlurper = new JsonSlurper()
-        def configJson = jsonSlurper.parseText(configStr)
-        return new HashMap<>(configJson)
+//        def jsonSlurper = new JsonSlurper()
+//        def configJson = jsonSlurper.parseText(configStr)
+        return new HashMap<>()
     }
 }
