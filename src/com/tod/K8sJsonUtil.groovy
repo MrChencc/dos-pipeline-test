@@ -64,7 +64,7 @@ class K8sJsonUtil {
           image: ${image}
           imagePullPolicy: IfNotPresent
           name: ${jobName}
-          - env:
+          env:
             - name: KUBERNETES_NAMESPACE
               valueFrom:
                 fieldRef:
