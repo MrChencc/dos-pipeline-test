@@ -62,7 +62,6 @@ class K8sJsonUtil {
       spec:
         terminationGracePeriodSeconds: 2
         containers:
-
           image: ${image}
           imagePullPolicy: IfNotPresent
           name: ${jobName}
