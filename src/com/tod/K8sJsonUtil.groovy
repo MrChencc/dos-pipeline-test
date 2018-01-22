@@ -15,7 +15,9 @@ class K8sJsonUtil {
         def jobName = env.JOB_NAME.toLowerCase().replace('_', '-').replace('/', '-')
         def image = config.image
 
-        def yamlEnv;
+        def yamlEnv = withEnv(config.deployment.envs)
+        def yamlPort = withPort(config.deployment.ports)
+        def yamlSvcPort = withSvcPort(config.deployment.ports)
 
         def service = """
 - apiVersion: v1
@@ -33,7 +35,8 @@ class K8sJsonUtil {
       provider: fabric8
       group: dos
     ports:
-""" + withSvcPort(config.deployment.ports)
+${yamlSvcPort}
+"""
 
         def deployment = """
 - apiVersion: extensions/v1beta1
@@ -69,23 +72,21 @@ class K8sJsonUtil {
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-"""
-//        + withEnv(config.deployment.envs)
-        +"""
+${yamlEnv}
           ports:
+${yamlPort}
 """
-//        + withPort(config.deployment.ports)
         return k8sResList + service + deployment;
     }
 
     private static String withEnv(def envs) {
         String finalVal = '';
-//        if (JenkinsUtil.isMap(envs)) {
-//            Map envsMap = (Map) envs;
-//            for (String mk : envsMap.keySet()) {
-//                finalVal += makeEnv(mk, envsMap.get(mk));
-//            }
-//        }
+        if (JenkinsUtil.isMap(envs)) {
+            Map envsMap = (Map) envs;
+            for (String mk : envsMap.keySet()) {
+                finalVal += makeEnv(mk, envsMap.get(mk));
+            }
+        }
         return finalVal;
     }
 
