@@ -32,7 +32,7 @@ def call(body) {
     if (flow.isOpenShift()){
         isSha = utils.getImageStreamSha(env.JOB_NAME)
     }
-    def jobName = env.JOB_NAME.toLowerCase().replace('-', '_').replace('/', '_')
+    def jobName = env.JOB_NAME.toLowerCase().replace('_', '-').replace('/', '-')
 
     def sha
     def list = """
