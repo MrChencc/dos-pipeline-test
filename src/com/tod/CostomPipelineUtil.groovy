@@ -12,9 +12,9 @@ class CostomPipelineUtil {
  * @param configStr 配置文件
  * @return
  */
-    static def getJsonPipelineConfig(String configStr) {
+    static def getJsonPipelineConfig(def configStr) {
         def jsonSlurper = new JsonSlurperClassic()
-        def configJson = jsonSlurper.parseText(configStr.toString())
+        def configJson = jsonSlurper.parse(configStr)
         return configJson
     }
 }
