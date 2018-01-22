@@ -32,6 +32,7 @@ def call(body) {
     if (flow.isOpenShift()){
         isSha = utils.getImageStreamSha(env.JOB_NAME)
     }
+    def jobName = ${env.JOB_NAME}.toLowerCase().replace('-', '_').replace('/', '_')
 
     def sha
     def list = """
@@ -49,18 +50,18 @@ items:
       fabric8.io/iconUrl: ${config.icon}
     labels:
       provider: fabric8
-      project: ${env.JOB_NAME}
+      project: ${jobName}
       expose: '${expose}'
       version: ${config.version}
       group: dos
-    name: ${env.JOB_NAME}
+    name: ${jobName}
   spec:
     ports:
     - port: 80
       protocol: TCP
       targetPort: ${config.port}
     selector:
-      project: ${env.JOB_NAME}
+      project: ${jobName}
       provider: fabric8
       group: dos
 """
@@ -73,22 +74,22 @@ items:
       fabric8.io/iconUrl: ${config.icon}
     labels:
       provider: fabric8
-      project: ${env.JOB_NAME}
+      project: ${jobName}
       version: ${config.version}
       group: dos
-    name: ${env.JOB_NAME}
+    name: ${jobName}
   spec:
     replicas: 1
     selector:
       matchLabels:
         provider: fabric8
-        project: ${env.JOB_NAME}
+        project: ${jobName}
         group: dos
     template:
       metadata:
         labels:
           provider: fabric8
-          project: ${env.JOB_NAME}
+          project: ${jobName}
           version: ${config.version}
           group: dos
       spec:
@@ -102,7 +103,7 @@ items:
             value: /opt/dos/conf
           image: ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}
           imagePullPolicy: IfNotPresent
-          name: ${env.JOB_NAME}
+          name: ${jobName}
           ports:
           - containerPort: ${config.port}
             name: http
@@ -124,21 +125,21 @@ items:
       fabric8.io/iconUrl: ${config.icon}
     labels:
       provider: fabric8
-      project: ${env.JOB_NAME}
+      project: ${jobName}
       version: ${config.version}
       group: dos
-    name: ${env.JOB_NAME}
+    name: ${jobName}
   spec:
     replicas: 1
     selector:
       provider: fabric8
-      project: ${env.JOB_NAME}
+      project: ${jobName}
       group: dos
     template:
       metadata:
         labels:
           provider: fabric8
-          project: ${env.JOB_NAME}
+          project: ${jobName}
           version: ${config.version}
           group: dos
       spec:
@@ -152,7 +153,7 @@ items:
             value: /opt/dos/conf
           image: ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}
           imagePullPolicy: IfNotPresent
-          name: ${env.JOB_NAME}
+          name: ${jobName}
           ports:
           - containerPort: ${config.port}
             name: http
@@ -169,10 +170,10 @@ items:
     - imageChangeParams:
         automatic: true
         containerNames:
-        - ${env.JOB_NAME}
+        - ${jobName}
         from:
           kind: ImageStreamTag
-          name: ${env.JOB_NAME}:${config.version}
+          name: ${jobName}:${config.version}
       type: ImageChange
 """
 
@@ -180,12 +181,12 @@ items:
 - apiVersion: v1
   kind: ImageStream
   metadata:
-    name: ${env.JOB_NAME}
+    name: ${jobName}
   spec:
     tags:
     - from:
         kind: ImageStreamImage
-        name: ${env.JOB_NAME}@${isSha}
+        name: ${jobName}@${isSha}
         namespace: ${utils.getNamespace()}
       name: ${config.version}
 """
