@@ -10,7 +10,7 @@
       "LANG":"zh_cn.UTF-8",
       "CONF_DIR":"/opt/dos/conf"
     },
-    "port":{
+    "ports":{
       "8080":"29152",
       "443":"29443"
     }
