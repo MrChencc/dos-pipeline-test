@@ -1,6 +1,6 @@
 package com.tod
 
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 
 /**
@@ -13,8 +13,8 @@ class CostomPipelineUtil {
  * @return
  */
     static def getJsonPipelineConfig(String configStr) {
-        def jsonSlurper = new JsonSlurper()
+        def jsonSlurper = new JsonSlurperClassic()
         def configJson = jsonSlurper.parseText(configStr)
-//        return new HashMap<>(configJson)
+        return new HashMap<>(configJson)
     }
 }
