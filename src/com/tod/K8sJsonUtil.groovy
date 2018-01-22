@@ -140,7 +140,6 @@ class K8sJsonUtil {
      * k8sResList
      */
     private static def k8sResList = """
----
 apiVersion: v1
 kind: List
 items:"""
