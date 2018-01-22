@@ -9,7 +9,7 @@ class K8sJsonUtil {
      * @param config 配置文件
      * @param envs 环境变量
      */
-    K8sJsonUtil(def config, def envs) {
+    static getK8sJson(def config, def env) {
         def utils = new Utils()
 
         def expose = config.exposeApp ?: 'true'
@@ -23,13 +23,10 @@ class K8sJsonUtil {
         def artifactId = m.artifactId.toLowerCase()
         def user = groupId[groupId.size() - 1].trim()
 
-        def isSha = ''
         def jobName = env.JOB_NAME.toLowerCase().replace('_', '-').replace('/', '-')
-
-        def sha
         def image = "${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/${user}/${artifactId}:${config.version}"
 
-        service = """
+        def service = """
 - apiVersion: v1
   kind: Service
   metadata:
@@ -45,10 +42,7 @@ class K8sJsonUtil {
       provider: fabric8
       group: dos
     ports:
-    - port: 80
-      protocol: TCP
-      targetPort: ${config.port}
-"""
+""" + withSvcPort(config.deployment.ports)
 
         def deployment = """
 - apiVersion: extensions/v1beta1
@@ -84,26 +78,75 @@ class K8sJsonUtil {
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          - name:  APP_HOME_CONF_DIR
-            value: /opt/dos/conf
+""" + withEnv(config.deployment.envs)
+        +"""
           ports:
-          - containerPort: ${config.port}
-            name: http
+""" + withPort(config.deployment.ports)
+        return k8sResList + service + deployment;
+    }
+
+    private static String withEnv(def envs) {
+        String finalVal = '';
+        if (JenkinsUtil.isMap(envs)) {
+            Map envsMap = (Map) envs;
+            for (String mk : envsMap.keySet()) {
+                finalVal += makeEnv(mk, envsMap.get(mk));
+            }
+        }
+        return finalVal;
+    }
+
+    private static String makeEnv(def key, def val) {
+        return """
+          - name:  ${key}
+            value: ${val}
 """
     }
 
-    String withEnv(def envs) {
-        if (JenkinsUtil.isMap(envs)) {
-
+    private static String withPort(def ports) {
+        String finalVal = '';
+        if (JenkinsUtil.isMap(ports) && ((Map) ports).keySet().size() > 0) {
+            Map portMap = (Map) ports
+            for (String mk : portMap.keySet()) {
+                finalVal += makePort(mk)
+            }
+        } else {
+            finalVal += makePort(80)
         }
+        return finalVal;
     }
 
-    String withPort(def ports) {
-
+    private static String makePort(def targetPort) {
+        String newName = 'http';
+        String targetPortStr = new String(targetPort + "");
+        if (!targetPort.equals('80')) {
+            newName += targetPortStr
+        }
+        return """
+          - containerPort: ${targetPort}
+            name: ${newName}
+"""
     }
 
-    String withSvcPort(def ports) {
+    private static String withSvcPort(def ports) {
+        String finalVal = '';
+        if (JenkinsUtil.isMap(ports) && ((Map) ports).keySet().size() > 0) {
+            Map portMap = (Map) ports
+            for (String mk : portMap.keySet()) {
+                finalVal += makeSvcPort(mk, portMap.get(mk))
+            }
+        } else {
+            finalVal += makeSvcPort(80, 80)
+        }
+        return finalVal;
+    }
 
+    private static String makeSvcPort(def targetPort, def port) {
+        return """
+    - port: ${port}
+      protocol: TCP
+      targetPort: ${targetPort}
+"""
     }
 
     /**
