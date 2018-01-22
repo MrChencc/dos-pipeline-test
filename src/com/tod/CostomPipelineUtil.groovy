@@ -15,6 +15,9 @@ class CostomPipelineUtil {
     static def getJsonPipelineConfig(def configStr) {
         def jsonSlurper = new JsonSlurper()
         def configJson = jsonSlurper.parseText(configStr)
-        return new HashMap<>(configJson)
+        if(configJson instanceof groovy.json.internal.LazyMap) {
+            return new HashMap<>(configJson)
+        }
+        return configJson
     }
 }
