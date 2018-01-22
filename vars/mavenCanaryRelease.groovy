@@ -30,10 +30,10 @@ def call(body) {
 
     def fabric8Registry = env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST + ':' + env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT + '/'
 
+    sh "docker build -f ${config.dockerfilePath} -t ${fabric8Registry}${user}/${artifactId}:${config.version} ."
     retry(2) {
-        sh "docker build -f ${config.dockerfilePath} -t ${fabric8Registry}${user}/${artifactId}:${config.version} ."
         sh "docker push  ${fabric8Registry}${user}/${artifactId}:${config.version}"
-        sh "docker rmi -f ${user}/${artifactId}:${version}"
+        sh "docker rmi -f ${fabric8Registry}${user}/${artifactId}:${config.version}"
     }
 
 //    if (flow.hasService("content-repository")) {
