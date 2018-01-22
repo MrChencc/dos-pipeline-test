@@ -12,6 +12,10 @@ class K8sJsonUtil {
     static getK8sJson(def config, def env) {
         def utils = new Utils()
 
+        if (!config.deployment) {
+            return k8sResList;
+        }
+
         def expose = config.exposeApp ?: 'true'
         def m = readMavenPom file: "${config.pom}"
         def groupId
