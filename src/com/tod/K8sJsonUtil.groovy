@@ -49,7 +49,6 @@ class K8sJsonUtil {
     replicas: 1
     selector:
       matchLabels:
-        provider: fabric8
         project: ${jobName}
         group: dos
     template:
