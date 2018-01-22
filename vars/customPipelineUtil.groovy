@@ -7,6 +7,8 @@ import groovy.json.JsonSlurper
  */
 def getJsonPipelineConfig(String configStr) {
     def jsonSlurper = new JsonSlurper()
+
     def configJson = jsonSlurper.parseText(configStr)
+    print(configJson)
     return configJson
 }
