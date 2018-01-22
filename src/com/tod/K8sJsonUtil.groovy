@@ -15,6 +15,8 @@ class K8sJsonUtil {
         def jobName = env.JOB_NAME.toLowerCase().replace('_', '-').replace('/', '-')
         def image = config.image
 
+        def yamlEnv;
+
         def service = """
 - apiVersion: v1
   kind: Service
@@ -143,7 +145,7 @@ class K8sJsonUtil {
     /**
      * k8sResList
      */
-    private final static def k8sResList = """
+    private static def k8sResList = """
 ---
 apiVersion: v1
 kind: List
