@@ -42,7 +42,7 @@ class JenkinsUtil {
      */
     static def tryTransMap(def oldVal) {
         // jenkins 不让用instanceof
-        if (isMap(oldVal)) {
+        if (!isMap(oldVal)) {
             return oldVal
         }
         String[] mapKey = ((Map) oldVal).keySet()
