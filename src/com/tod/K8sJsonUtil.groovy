@@ -1,8 +1,5 @@
 package com.tod
 
-import io.fabric8.Fabric8Commands
-import io.fabric8.Utils
-
 class K8sJsonUtil {
     /**
      * 获取对应的Json文件
