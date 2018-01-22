@@ -14,7 +14,9 @@ class CostomPipelineUtil {
  */
     static def getJsonPipelineConfig(def configStr) {
         def jsonSlurper = new JsonSlurper()
+        print(1)
         def configJson = jsonSlurper.parseText(configStr.toString())
+        print(2)
         return configJson
     }
 }
