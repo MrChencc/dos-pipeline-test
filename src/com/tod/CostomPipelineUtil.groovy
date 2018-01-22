@@ -1,6 +1,6 @@
 package com.tod;
 
-import groovy.json.JsonSlurper
+import groovy.json.JsonSlurperClassic
 
 /**
  * 自定义类型Pipeline 工具
@@ -12,7 +12,7 @@ class CostomPipelineUtil {
  * @return
  */
     static def getJsonPipelineConfig(def configStr) {
-        def jsonSlurper = new JsonSlurper()
+        def jsonSlurper = new JsonSlurperClassic()
         def configJson = jsonSlurper.parseText(configStr)
         return configJson;
     }
