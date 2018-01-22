@@ -1,5 +1,6 @@
 package com.tod
 
+import com.cloudbees.groovy.cps.NonCPS
 import groovy.json.JsonSlurper;
 
 
@@ -12,6 +13,7 @@ class CostomPipelineUtil {
  * @param configStr 配置文件
  * @return
  */
+    @NonCPS
     static def getJsonPipelineConfig(def configStr) {
         def jsonSlurper = new JsonSlurper()
         def configJson = jsonSlurper.parseText(configStr)
