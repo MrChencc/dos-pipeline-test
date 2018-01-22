@@ -2,6 +2,7 @@ package com.tod
 
 import com.cloudbees.groovy.cps.NonCPS
 import groovy.json.JsonSlurperClassic
+import groovy.json.internal.LazyMap
 
 
 /**
@@ -17,6 +18,19 @@ class CustomPipelineUtil {
     static def getJsonPipelineConfig(String configStr) {
         def jsonSlurper = new JsonSlurperClassic()
         def configJson = jsonSlurper.parseText(configStr)
-        return new HashMap<>(configJson)
+        return tryTransMap(configJson);
+    }
+
+    private static def tryTransMap(def oldVal) {
+        if (!(oldVal instanceof Map)) {
+            return oldVal
+        }
+        Map map = oldVal;
+        Map newMap = new HashMap();
+        String[] mapKey = map.keySet()
+        for (String mKey : mapKey) {
+            newMap.put(mKey, tryTransMap(map.get(mKey)))
+        }
+        return newMap
     }
 }
