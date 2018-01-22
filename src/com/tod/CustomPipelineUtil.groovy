@@ -18,14 +18,16 @@ class CustomPipelineUtil {
     }
 
     private static def tryTransMap(def oldVal) {
-        if (!(oldVal instanceof Map)) {
+        // jenkins 不让用instanceof
+        String[] mapKey
+        try {
+            mapKey = oldVal.keySet()
+        } catch (Throwable ignore) {
             return oldVal
         }
-        Map map = oldVal;
         Map newMap = new HashMap();
-        String[] mapKey = map.keySet()
         for (String mKey : mapKey) {
-            newMap.put(mKey, tryTransMap(map.get(mKey)))
+            newMap.put(mKey, tryTransMap(oldVal.get(mKey)))
         }
         return newMap
     }
