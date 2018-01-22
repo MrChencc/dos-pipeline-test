@@ -34,8 +34,7 @@ class K8sJsonUtil {
       project: ${jobName}
       provider: fabric8
       group: dos
-    ports:
-${yamlSvcPort}
+    ports:${yamlSvcPort}
 """
 
         def deployment = """
@@ -71,10 +70,8 @@ ${yamlSvcPort}
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
-                fieldPath: metadata.namespace
-${yamlEnv}
-          ports:
-${yamlPort}
+                fieldPath: metadata.namespace${yamlEnv}
+          ports:${yamlPort}
 """
         return k8sResList + service + deployment;
     }
