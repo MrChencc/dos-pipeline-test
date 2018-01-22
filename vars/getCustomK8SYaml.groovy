@@ -1,6 +1,5 @@
 #!/usr/bin/groovy
-import io.fabric8.Utils
-import io.fabric8.Fabric8Commands
+import com.tod.K8sJsonUtil
 
 def call(body) {
     // evaluate the body block, and collect configuration into the object
@@ -8,10 +7,7 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    def yaml = getKubernetesYaml{
-        label = 'dos-proj'
-        version = customConfig.version
-        pom = customConfig.build.pomfile
-    }
-
+    def yaml = K8sJsonUtil.getK8sJson(config, env);
+    echo yaml
+    return yaml
 }
