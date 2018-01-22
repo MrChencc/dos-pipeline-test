@@ -30,7 +30,7 @@ class K8sJsonUtil {
       group: dos
     name: ${jobName}
   spec:
-   selector:
+    selector:
       project: ${jobName}
       provider: fabric8
       group: dos
