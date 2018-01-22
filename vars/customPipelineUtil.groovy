@@ -9,6 +9,7 @@ def getJsonPipelineConfig(String configStr) {
     def jsonSlurper = new JsonSlurper()
 
     def configJson = jsonSlurper.parseText(configStr)
-    print(configJson)
+    echo "hello"
+    echo configJson.toString()
     return configJson
 }
