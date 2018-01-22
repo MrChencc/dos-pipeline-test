@@ -6,7 +6,7 @@ def call(body) {
     body.delegate = config
     body()
 
-    def customConfig = config.customConfig
+    def customConfig = config.custom
     sh 'source /etc/profile'
     sh 'sh ' + customConfig.build.buildShell
 }
