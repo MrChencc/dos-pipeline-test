@@ -7,7 +7,7 @@ def call(body) {
     body()
 
     def customConfig = config.custom
-    container(name: 'node') {
+    container(name: 'nodes') {
         sh 'source /etc/profile'
         sh 'sh ' + customConfig.build.buildShell
     }
