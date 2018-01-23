@@ -1,4 +1,3 @@
-
 def call(body) {
     // evaluate the body block, and collect configuration into the object
     def config = [:]
@@ -7,8 +6,6 @@ def call(body) {
     body()
 
     def customConfig = config.custom
-    container(name: 'nodes') {
-        sh 'source /etc/profile'
-        sh 'sh ' + customConfig.build.buildShell
-    }
+    sh 'source /etc/profile'
+    sh 'sh ' + customConfig.build.buildShell
 }
