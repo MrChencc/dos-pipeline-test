@@ -12,7 +12,8 @@ def call(Map parameters = [:], body) {
     if (flow.isOpenShift()) {
         echo 'Runnning on openshift so using S2I binary source and Docker strategy'
         podTemplate(label: label, serviceAccount: 'jenkins', inheritFrom: "${inheritFrom}",
-                containers: [[name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, envVars: [[key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/']]]],
+                containers: [[name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, envVars: [[key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/']]],
+                             [name: 'nodejs', image: "fabric8/node:5.3-onbuild", command: 'cat', ttyEnabled: true]],
                 volumes: [
                         secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
                         secretVolume(secretName: 'jenkins-hub-api-token', mountPath: '/home/jenkins/.apitoken')]) {
