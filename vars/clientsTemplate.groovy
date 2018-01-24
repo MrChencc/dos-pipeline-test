@@ -5,7 +5,6 @@ def call(Map parameters = [:], body) {
     def label = parameters.get('label', defaultLabel)
 
     def clientsImage = parameters.get('clientsImage', 'fabric8/builder-clients:0.1')
-    def nodesImage = parameters.get('nodesImage', 'fabric8/node:latest')
     def inheritFrom = parameters.get('inheritFrom', 'base')
 
     def flow = new io.fabric8.Fabric8Commands()
@@ -13,8 +12,7 @@ def call(Map parameters = [:], body) {
     if (flow.isOpenShift()) {
         echo 'Runnning on openshift so using S2I binary source and Docker strategy'
         podTemplate(label: label, serviceAccount: 'jenkins', inheritFrom: "${inheritFrom}",
-                containers: [[name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, envVars: [[key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/']]],
-                             [name: 'nodes', image: "${nodesImage}", command: 'cat', ttyEnabled: true]],
+                containers: [[name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, envVars: [[key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/']]]],
                 volumes: [
                         secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
                         secretVolume(secretName: 'jenkins-hub-api-token', mountPath: '/home/jenkins/.apitoken')]) {
@@ -23,8 +21,7 @@ def call(Map parameters = [:], body) {
     } else {
         echo 'Mounting docker socket to build docker images'
         podTemplate(label: label, serviceAccount: 'jenkins', inheritFrom: "${inheritFrom}",
-                containers: [[name: 'clients', image: "${clientsImage}", command: 'cat', privileged: true, ttyEnabled: true, envVars: [[key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/']]],
-                             [name: 'nodes', image: "${nodesImage}", command: 'cat', ttyEnabled: true, privileged: true]],
+                containers: [[name: 'clients', image: "${clientsImage}", command: 'cat', privileged: true, ttyEnabled: true, envVars: [[key: 'DOCKER_CONFIG', value: '/home/jenkins/.docker/']]]],
                 volumes: [
                         secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
                         secretVolume(secretName: 'jenkins-hub-api-token', mountPath: '/home/jenkins/.apitoken'),
