@@ -11,7 +11,7 @@ class K8sJsonUtil {
             return k8sResList;
         }
 
-        def expose = config.exposeApp ?: 'true'
+        def expose = config.deployment.isExpose ?: 'true'
         def jobName = env.JOB_NAME.toLowerCase().replace('_', '-').replace('/', '-')
         def image = config.image
 
