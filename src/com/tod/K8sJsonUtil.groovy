@@ -32,7 +32,6 @@ class K8sJsonUtil {
   spec:
     selector:
       project: ${jobName}
-      provider: fabric8
       group: dos
     ports:${yamlSvcPort}"""
 
