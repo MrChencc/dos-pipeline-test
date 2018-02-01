@@ -34,6 +34,7 @@ def call(body) {
     retry(2) {
         sh "docker push ${docker_image}"
         sh "docker rmi ${docker_image}"
+        echo "~#####*****${docker_image}*****#####~"
     }
 
     return docker_image
