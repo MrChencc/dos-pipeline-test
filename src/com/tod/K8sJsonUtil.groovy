@@ -62,6 +62,13 @@ class K8sJsonUtil {
         - image: ${image}
           imagePullPolicy: IfNotPresent
           name: ${jobName}
+          resources:
+            limits:
+              cpu: "0"
+              memory: "0"
+            requests:
+              cpu: "0"
+              memory: "0"
           env:
             - name: KUBERNETES_NAMESPACE
               valueFrom:
