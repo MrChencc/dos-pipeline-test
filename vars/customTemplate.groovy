@@ -5,7 +5,7 @@ def call(Map parameters = [:], body) {
     def defaultLabel = "clients.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
     def label = parameters.get('label', defaultLabel)
 
-    def clientsImage = parameters.get('clientsImage', 'fabric8/builder-clients:0.1')
+//    def clientsImage = parameters.get('clientsImage', 'fabric8/builder-clients:0.1')
     def customImage = parameters.get('customImage', 'dos/jenkins-slave-base')
     def inheritFrom = parameters.get('inheritFrom', 'base')
 
@@ -14,8 +14,8 @@ def call(Map parameters = [:], body) {
     echo 'Mounting docker socket to build docker images'
     podTemplate(label: label, inheritFrom: "${inheritFrom}",
             containers: [
-                    [name: 'custom', image: "${customImage}", command: 'cat', ttyEnabled: true],
-                    [name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, privileged: true]],
+                    [name: 'custom', image: "${customImage}", command: 'cat', ttyEnabled: true]],
+//                    [name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, privileged: true]],
             volumes: [secretVolume(secretName: 'jenkins-maven-settings', mountPath: '/root/.m2'),
                       persistentVolumeClaim(claimName: 'jenkins-mvn-local-repo', mountPath: '/root/.mvnrepo'),
                       secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
