@@ -15,7 +15,7 @@ def call(Map parameters = [:], body) {
     echo 'Mounting docker socket to build docker images'
     podTemplate(label: label, inheritFrom: "${inheritFrom}",
             containers: [
-                    [name: 'nodejs', image: "${buildImage}", command: 'cat', ttyEnabled: true],
+                    [name: 'builder', image: "${buildImage}", command: 'cat', ttyEnabled: true],
                     [name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, privileged: true]
                    ],
             volumes: [persistentVolumeClaim(claimName: 'jenkins-nodejs-repository', mountPath: '/home/jenkins/.npm'),
