@@ -5,9 +5,8 @@ def call(Map parameters = [:], body) {
     def defaultLabel = "clients.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
     def label = parameters.get('label', defaultLabel)
 
-    def nodeVersion = parameters.get('nodeVersion',"8.9.3");
     def clientsImage = parameters.get('clientsImage', 'fabric8/builder-clients:0.1')
-    def buildImage = parameters.get('buildImage', "registry.timeondata.com/dos/jenkins-slave-nodejs:${nodeVersion}")
+    def buildImage = parameters.get('buildImage', "registry.timeondata.com/dos/jenkins-slave-nodejs:nvm")
     def inheritFrom = parameters.get('inheritFrom', 'base')
 
     def flow = new io.fabric8.Fabric8Commands()
