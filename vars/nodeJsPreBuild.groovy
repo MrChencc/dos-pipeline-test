@@ -7,12 +7,10 @@ def call(body) {
 
     def customConfig = config.custom
     echo 'switch node version...'
-    container(name: 'clients') {
-        try {
-            sh 'nvm use' + customConfig.build.nodeversion
-        } catch (error) {
-            sh 'nvm install' + customConfig.build.nodeversion
-            sh 'nvm use' + customConfig.build.nodeversion
-        }
+    try {
+        sh 'nvm use' + customConfig.build.nodeversion
+    } catch (error) {
+        sh 'nvm install' + customConfig.build.nodeversion
+        sh 'nvm use' + customConfig.build.nodeversion
     }
 }
