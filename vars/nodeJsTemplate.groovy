@@ -13,6 +13,7 @@ def call(Map parameters = [:], body) {
 
     echo 'Mounting docker socket to build docker images'
     podTemplate(label: label, inheritFrom: "${inheritFrom}",
+            imagePullPolicy: "Always"
             containers: [
                     [name: 'builder', image: "${buildImage}", command: 'cat', ttyEnabled: true],
                     [name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, privileged: true]
