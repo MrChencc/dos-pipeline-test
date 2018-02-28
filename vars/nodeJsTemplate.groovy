@@ -12,7 +12,7 @@ def call(Map parameters = [:], body) {
     def flow = new io.fabric8.Fabric8Commands()
 
     echo 'Mounting docker socket to build docker images'
-    podTemplate(label: label, inheritFrom: "${inheritFrom}"
+    podTemplate(label: label, inheritFrom: "${inheritFrom}",
             containers: [
                     [name: 'builder', image: "${buildImage}", command: 'cat', ttyEnabled: true,alwaysPullImage: true],
                     [name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, privileged: true]
