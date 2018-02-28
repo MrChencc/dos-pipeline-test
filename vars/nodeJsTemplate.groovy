@@ -12,10 +12,9 @@ def call(Map parameters = [:], body) {
     def flow = new io.fabric8.Fabric8Commands()
 
     echo 'Mounting docker socket to build docker images'
-    podTemplate(label: label, inheritFrom: "${inheritFrom}",
-            imagePullPolicy: "Always"
+    podTemplate(label: label, inheritFrom: "${inheritFrom}"
             containers: [
-                    [name: 'builder', image: "${buildImage}", command: 'cat', ttyEnabled: true],
+                    [name: 'builder', image: "${buildImage}", command: 'cat', ttyEnabled: true,alwaysPullImage: true],
                     [name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, privileged: true]
                    ],
             volumes: [persistentVolumeClaim(claimName: 'jenkins-nodejs-repository', mountPath: '/home/jenkins/.npm'),
