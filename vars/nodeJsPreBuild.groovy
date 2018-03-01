@@ -7,7 +7,7 @@ def call(body) {
 
     def customConfig = config.custom
     echo 'switch node version...'
-    sh '/init.sh'
+    sh 'source /init.sh'
     try {
         sh 'nvm use' + customConfig.build.nodeversion
     } catch (error) {
