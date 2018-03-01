@@ -12,5 +12,5 @@ def call(body) {
 nvm install  ${customConfig.build.nodeversion}
 nvm use ${customConfig.build.nodeversion}
 """
-    sh "bash ${cmd1}"
+    sh "bash -c ${cmd1}"
 }
