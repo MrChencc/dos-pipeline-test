@@ -9,11 +9,14 @@ def call(body) {
     echo 'switch node version...'
     try {
         sh """
-        /.nvm/nvm.sh
-        nvm use ${customConfig.build.nodeversion}
+source /.nvm/nvm.sh
+nvm use ${customConfig.build.nodeversion}
         """
     } catch (error) {
-        sh 'nvm install' + customConfig.build.nodeversion
-        sh 'nvm use' + customConfig.build.nodeversion
+        sh """
+source /.nvm/nvm.sh
+nvm install  ${customConfig.build.nodeversion}
+nvm use ${customConfig.build.nodeversion}
+        """
     }
 }
