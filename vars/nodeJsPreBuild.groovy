@@ -8,5 +8,5 @@ def call(body) {
     def customConfig = config.custom
     echo 'switch node version...'
     
-    sh "n ${customConfig.build.nodeversion}"
+    sh "/switch.sh ${customConfig.build.nodeversion}"
 }
