@@ -7,16 +7,10 @@ def call(body) {
 
     def customConfig = config.custom
     echo 'switch node version...'
-    try {
-        sh """
-. /.nvm/nvm.sh
-nvm use ${customConfig.build.nodeversion}
-        """
-    } catch (error) {
-        sh """       
+    cmd1 = """       
 . /.nvm/nvm.sh
 nvm install  ${customConfig.build.nodeversion}
 nvm use ${customConfig.build.nodeversion}
-        """
-    }
+"""
+    sh "bash ${cmd1}"
 }
