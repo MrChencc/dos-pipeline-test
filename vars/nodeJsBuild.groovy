@@ -9,7 +9,7 @@ def call(body) {
     echo 'switch node version...'
     
     sh """
-/switch ${customConfig.build.nodeversion}
+. /switch ${customConfig.build.nodeversion}
 . ${customConfig.build.buildShell}
 """
 }
