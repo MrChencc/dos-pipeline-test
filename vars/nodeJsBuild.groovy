@@ -13,5 +13,6 @@ source /switch ${customConfig.build.nodeversion} && \
 source ${customConfig.build.buildShell}
 """
     sh "echo ${cmd} >> /run.sh"
+    sh "chmod -R 731 /run.sh"
     sh "bash -c /run.sh"
 }
