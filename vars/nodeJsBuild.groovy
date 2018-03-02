@@ -13,5 +13,5 @@ source /switch ${customConfig.build.nodeversion} && \
 source ${customConfig.build.buildShell}
 """
     sh "echo ${cmd} >> /run.sh"
-    sh "bash /run.sh"
+    sh "bash -c /run.sh"
 }
