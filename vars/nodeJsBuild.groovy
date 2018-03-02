@@ -10,6 +10,6 @@ def call(body) {
     
     sh """
 /switch ${customConfig.build.nodeversion}
-sh ${customConfig.build.buildShell}
+. ${customConfig.build.buildShell}
 """
 }
