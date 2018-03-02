@@ -11,6 +11,6 @@ def call(body) {
 source /switch ${customConfig.build.nodeversion} && \
 source ${customConfig.build.buildShell}
 """
-
-    sh "bash ${cmd}"
+    sh "echo ${cmd} >> /run.sh"
+    sh "bash -c /run.sh"
 }
