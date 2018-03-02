@@ -7,9 +7,10 @@ def call(body) {
 
     def customConfig = config.custom
     echo 'switch node version...'
-    
-    sh """
-. /switch ${customConfig.build.nodeversion}
-. ${customConfig.build.buildShell}
+    def cmd = """
+/switch ${customConfig.build.nodeversion}
+${customConfig.build.buildShell}
 """
+
+    sh "bash ${cmd}"
 }
