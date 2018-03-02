@@ -12,6 +12,7 @@ def call(body) {
 source /switch ${customConfig.build.nodeversion} && \
 source ${customConfig.build.buildShell}
 """
+    sh "echo ${cmd}"
     sh "echo ${cmd} > /run.sh"
     sh "chmod -R 777 /run.sh"
     sh "bash -c /run.sh"
