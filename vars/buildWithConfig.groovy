@@ -6,6 +6,5 @@ def call(body) {
     body()
 
     def customConfig = config.custom
-    sh '. /etc/profile'
     sh 'sh ' + customConfig.build.buildShell
 }
