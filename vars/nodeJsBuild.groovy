@@ -11,5 +11,5 @@ def call(body) {
 . /switch ${customConfig.build.nodeversion} && \
 . ${customConfig.build.buildShell}
 """
-    sh "${cmd}"
+    sh "echo ${cmd} | bash"
 }
