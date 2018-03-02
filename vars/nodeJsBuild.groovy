@@ -8,8 +8,11 @@ def call(body) {
     def customConfig = config.custom
     echo 'switch node version...'
     def cmd = """
+#!/bin/bash    
 . /switch ${customConfig.build.nodeversion} && \
 . ${customConfig.build.buildShell}
 """
-    sh "echo ${cmd} | bash"
+    sh "echo ${cmd} > /run.sh"
+    sh "chmod -R 777 /run.sh"
+    sh "bash -c /run.sh"
 }
