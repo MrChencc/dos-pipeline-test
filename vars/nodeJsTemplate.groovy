@@ -18,6 +18,7 @@ def call(Map parameters = [:], body) {
                     [name: 'clients', image: "${clientsImage}", command: 'cat', ttyEnabled: true, privileged: true]
                    ],
             volumes: [persistentVolumeClaim(claimName: 'jenkins-nodejs-repository', mountPath: '/home/jenkins/.npm'),
+                      persistentVolumeClaim(claimName: 'jenkins-nodejs-versions', mountPath: '/opt/nvm/versions'),
                       secretVolume(secretName: 'jenkins-docker-cfg', mountPath: '/home/jenkins/.docker'),
                       secretVolume(secretName: 'jenkins-release-gpg', mountPath: '/home/jenkins/.gnupg'),
                       secretVolume(secretName: 'jenkins-hub-api-token', mountPath: '/home/jenkins/.apitoken'),
