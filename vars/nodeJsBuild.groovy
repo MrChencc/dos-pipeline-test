@@ -12,4 +12,5 @@ source /switch ${customConfig.build.nodeversion}
 source ${customConfig.build.buildShell}
 """
     sh "echo \'${cmd}\' | bash"
+    echo "build ok.."
 }
