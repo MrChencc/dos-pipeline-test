@@ -39,7 +39,7 @@ items:
   spec:
     ports:
     - port: 
-      protocol: TCP,
+      protocol: TCP
       port: ${config.containerPort}
       targetPort: ${config.targetPort}
       nodePort: ${config.nodePort}
