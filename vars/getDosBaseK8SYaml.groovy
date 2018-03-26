@@ -39,11 +39,14 @@ items:
   spec:
     ports:
     - port: 
-      protocol: TCP
+      protocol: TCP,
+      port: ${config.containerPort}
       targetPort: ${config.targetPort}
+      nodePort: ${config.nodePort}
     selector:
       project: ${jobName}
       group: dos
+    type: NodePort
 """
 
     def deployment = """
@@ -74,7 +77,7 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: ${env.FABRIC8_DOCKER_REGISTRY_SERVICE_HOST}:${env.FABRIC8_DOCKER_REGISTRY_SERVICE_PORT}/fabric8/${jobName}:${config.version}
+          image: ${config.image}
           imagePullPolicy: IfNotPresent
           name: ${jobName}
           ports:
