@@ -99,3 +99,14 @@ items:
     return yaml
 
 }
+
+/**
+ def yaml = getDosBaseK8SYaml{
+ version = proj_version
+ image = docker_image
+ exposeApp = true
+ targetPort = 443
+ containerPort = 29151
+ nodePort = 29161
+ }
+ */
