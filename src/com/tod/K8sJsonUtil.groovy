@@ -101,7 +101,7 @@ class K8sJsonUtil {
         if (JenkinsUtil.isMap(ports) && ((Map) ports).keySet().size() > 0) {
             Map portMap = (Map) ports
             for (String mk : portMap.keySet()) {
-                finalVal += makePort(portMap.get(mk))
+                finalVal += makePort(mk)
             }
         } else {
             finalVal += makePort(80)
