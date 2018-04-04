@@ -101,7 +101,7 @@ items:
 }
 
 /**
- def yaml = getDosBaseK8SYaml{
+ def yaml = getDosK8SYaml{
  version = proj_version
  image = docker_image
  exposeApp = true
