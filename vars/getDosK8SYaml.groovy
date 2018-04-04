@@ -14,6 +14,7 @@ def call(body) {
     def requestMemory = config.resourceRequestMemory ?: '0'
     def limitCPU = config.resourceLimitMemory ?: '0'
     def limitMemory = config.resourceLimitMemory ?: '0'
+    def isBase = config.isBase ?: true
 
     def yaml
 
@@ -49,7 +50,7 @@ items:
     type: NodePort
 """
 
-    def deployment = """
+    def deploymentBase = """
 - apiVersion: extensions/v1beta1
   kind: Deployment
   metadata:
@@ -92,7 +93,58 @@ items:
               memory: ${limitMemory}
 """
 
-    yaml = list + service + deployment
+    def deploymentApp = """
+- apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:
+    labels:
+      project: ${jobName}
+      version: ${config.version}
+      group: dos
+    name: ${jobName}
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        project: ${jobName}
+        group: dos
+    template:
+      metadata:
+        labels:
+          project: ${jobName}
+          version: ${config.version}
+          group: dos
+      spec:
+        containers:
+        - env:
+          - name: KUBERNETES_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name:  APP_HOME_CONF_DIR
+              value: ${config.appHomeConfDir}
+          - name:  KEYCLOAK.AUTH.URL
+              value: ${config.authURL}
+          image: ${config.image}
+          imagePullPolicy: IfNotPresent
+          name: ${jobName}
+          ports:
+          - containerPort: ${config.containerPort}
+            name: http
+          resources:
+            limits:
+              cpu: ${requestCPU}
+              memory: ${requestMemory}
+            requests:
+              cpu: ${limitCPU}
+              memory: ${limitMemory}
+"""
+
+    if (isBase) {
+        yaml = list + service + deploymentBase
+    } else {
+        yaml = list + service +deploymentApp
+    }
 
 
     echo 'using resources:\n' + yaml
@@ -101,6 +153,7 @@ items:
 }
 
 /**
+ * 前台
  def yaml = getDosK8SYaml{
  version = proj_version
  image = docker_image
@@ -108,5 +161,22 @@ items:
  targetPort = 443
  containerPort = 29151
  nodePort = 29161
+ isBase = true
+ appHomeConfDir = /opt/dos/conf
+ authURL = http://192.168.1.87:29167/auth
  }
+
+ 后台
+ def yaml = getDosK8SYaml{
+ version = proj_version
+ image = docker_image
+ exposeApp = false
+ targetPort = 29152
+ containerPort = 29152
+ nodePort = 29162
+ isBase = false
+ appHomeConfDir = /opt/dos/conf
+ authURL = http://192.168.1.87:29167/auth
+ }
+
  */
