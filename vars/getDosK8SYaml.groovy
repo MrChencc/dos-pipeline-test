@@ -124,9 +124,9 @@ items:
               fieldRef:
                 fieldPath: metadata.namespace
           - name:  APP_HOME_CONF_DIR
-              value: ${config.appHomeConfDir}
+            value: ${config.appHomeConfDir}
           - name: KEYCLOAK.AUTH.URL
-              value: ${config.authURL}
+            value: ${config.authURL}
           image: ${config.image}
           imagePullPolicy: IfNotPresent
           name: ${jobName}
