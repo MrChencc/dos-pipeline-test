@@ -14,7 +14,9 @@ def call(body) {
     def requestMemory = config.resourceRequestMemory ?: '0'
     def limitCPU = config.resourceLimitMemory ?: '0'
     def limitMemory = config.resourceLimitMemory ?: '0'
-    def isBase = config.isBase ?: true
+    def isBase = config.isBase ?: false
+
+    echo "isBase: ${config.isBase}"
 
     def yaml
 
@@ -162,8 +164,8 @@ items:
  containerPort = 29151
  nodePort = 29161
  isBase = true
- appHomeConfDir = /opt/dos/conf
- authURL = http://192.168.1.87:29167/auth
+ appHomeConfDir = ‘/opt/dos/conf’
+ authURL = ‘http://192.168.1.87:29167/auth’
  }
 
  后台
@@ -175,8 +177,8 @@ items:
  containerPort = 29152
  nodePort = 29162
  isBase = false
- appHomeConfDir = /opt/dos/conf
- authURL = http://192.168.1.87:29167/auth
+ appHomeConfDir = ‘/opt/dos/conf’
+ authURL = ‘http://192.168.1.87:29167/auth’
  }
 
  */
