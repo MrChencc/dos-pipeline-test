@@ -126,7 +126,7 @@ items:
           - name:  APP_HOME_CONF_DIR
               value: ${config.appHomeConfDir}
           - name:  KEYCLOAK.AUTH.URL
-              value: ${config.authURL}
+              value: '${config.authURL}'
           image: ${config.image}
           imagePullPolicy: IfNotPresent
           name: ${jobName}
