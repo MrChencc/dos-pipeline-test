@@ -16,7 +16,7 @@ def call(body) {
     def limitMemory = config.resourceLimitMemory ?: '0'
     def isBase = config.isBase ?: false
 
-    echo "isBase: ${config.isBase}"
+    echo 'isBase: ' + ${config.isBase}
 
     def yaml
 
