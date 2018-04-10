@@ -80,7 +80,7 @@ items:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          image: ${config.image}
+          image: registry.timeondata.com/dos/appengine:latest
           imagePullPolicy: IfNotPresent
           name: ${jobName}
           ports:
